@@ -1,4 +1,11 @@
 from django.shortcuts import render
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+import numpy as np
+import urllib.request
+import json
+import cv2
+import os
 
 # define the path to the face detector
 FACE_DETECTOR_PATH = "{base_path}/cascades/haarcascade_frontalface_default.xml".format(
@@ -34,7 +41,7 @@ def detect(request):
 		image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 		detector = cv2.CascadeClassifier(FACE_DETECTOR_PATH)
 		rects = detector.detectMultiScale(image, scaleFactor=1.1, minNeighbors=5,
-			minSize=(30, 30), flags=cv2.cv.CV_HAAR_SCALE_IMAGE)
+			minSize=(30, 30), flags=cv2.CASCADE_SCALE_IMAGE)
 
 		# construct a list of bounding boxes from the detection
 		rects = [(int(x), int(y), int(x + w), int(y + h)) for (x, y, w, h) in rects]
@@ -55,7 +62,7 @@ def _grab_image(path=None, stream=None, url=None):
 	else:	
 		# if the URL is not None, then download the image
 		if url is not None:
-			resp = urllib.urlopen(url)
+			resp = urllib.request.urlopen(url)
 			data = resp.read()
 
 		# if the stream is not None, then the image has been uploaded
