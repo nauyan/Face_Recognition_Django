@@ -6,10 +6,15 @@ import urllib.request
 import json
 import cv2
 import os
+import datetime
 
 # define the path to the face detector
 FACE_DETECTOR_PATH = "{base_path}/cascades/haarcascade_frontalface_default.xml".format(
 	base_path=os.path.abspath(os.path.dirname(__file__)))
+
+def hello(request):
+   today = datetime.datetime.now().date()
+   return render(request, "./hello.html", {"today" : today})
 
 @csrf_exempt
 def detect(request):
@@ -18,6 +23,7 @@ def detect(request):
 
 	# check to see if this is a post request
 	if request.method == "POST":
+		print ("Method is POST")
 		# check to see if an image was uploaded
 		if request.FILES.get("image", None) is not None:
 			# grab the uploaded image
