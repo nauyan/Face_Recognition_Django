@@ -1,4 +1,6 @@
-# Work In Progress
+# Face Recognition Django Application
+
+## Work in Progress
 
 
 To start server use:
