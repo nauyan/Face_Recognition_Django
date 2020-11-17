@@ -1,7 +1,10 @@
 # Face Recognition Django Application
 
 ## Work in Progress
-
+To Install Dependecies use:
+```
+pip install -r requirements.txt
+```
 
 To start server use:
 ```
